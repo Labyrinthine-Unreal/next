@@ -42,7 +42,7 @@ export default function Home() {
         Tauros Dashboard
       </title>
     </Head>
-    <Flex direction="column" width="100vw" height="100vh">
+    <Flex direction="column" width="100vw">
       <Header user={user} logout={logout} isLoggingOut={isLoggingOut}/>
     </Flex>
 
