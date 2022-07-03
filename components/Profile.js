@@ -1,8 +1,10 @@
+import CustomContainer from "./CustomContainer";
+
 export default function Profile(){
     return(
-        <h1>
-            Does it Work
-        </h1>
+        <CustomContainer>
+            Did it work again
+        </CustomContainer>
 
     )
 }
