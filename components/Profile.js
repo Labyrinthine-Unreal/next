@@ -2,9 +2,9 @@ import CustomContainer from "./CustomContainer";
 
 export default function Profile(){
     return(
-        <CustomContainer>
+        <h1>
             Now is okay
-        </CustomContainer>
+        </h1>
 
     )
 }
