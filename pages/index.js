@@ -25,7 +25,9 @@ export default function Home() {
           <Text fontSize="5xl" fontWeight="bold" color="white">
             Tauros Dashboard<br></br></Text>
             <Button colorScheme="purple"
-            onClick={()=>authenticate({})}>
+            onClick={()=>authenticate({
+              signingMessage:"Tauros SignIN"
+            })}>
               Metamask Login
               </Button>
         </Flex>
