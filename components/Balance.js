@@ -31,8 +31,6 @@ export default function Balance({user}) {
         })
     }, [])
 
-    console.log(data)
-
     return(
         <CustomContainer>
             <Text mb="6" fontSize="xl" fontWeight="bold">
