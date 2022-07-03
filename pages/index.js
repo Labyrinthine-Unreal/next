@@ -2,7 +2,7 @@ import Head from "next/head"
 import { useMoralis } from "react-moralis"
 import { Flex,Text,Button } from "@chakra-ui/react"
 export default function Home() {
-  const {isAuthenticated} =  useMoralis()
+  const {isAuthenticated, authenticate} =  useMoralis()
   console.log(isAuthenticated)
   if(!isAuthenticated){
     return(
@@ -23,13 +23,13 @@ export default function Home() {
         >
           <Text fontSize="5xl" fontWeight="bold" color="white">
             Tauros Dashboard<br></br></Text>
-            <Button colorScheme="purple">Metamask Login</Button>
-          
+            <Button colorScheme="purple"
+            onClick={()=>authenticate({})}>
+              Metamask Login
+              </Button>
         </Flex>
-      
       </>
     )
-
   }
   return (
     <div>
