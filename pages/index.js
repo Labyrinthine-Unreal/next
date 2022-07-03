@@ -3,6 +3,7 @@ import { useMoralis } from "react-moralis"
 import { Flex,Text,Button,Box,Tabs,TabPanel,TabList,Tab,TabPanels } from "@chakra-ui/react"
 import Header from "../components/Header"
 import Profile from "../components/Profile"
+import Balance from "../components/Balance"
 export default function Home() {
   const {isAuthenticated, authenticate, user, logout, isLoggingOut} =  useMoralis()
   console.log(isAuthenticated)
@@ -60,7 +61,9 @@ export default function Home() {
           <TabPanel>
             <Profile user={user} />
           </TabPanel>
-          <TabPanel>Balance</TabPanel>
+          <TabPanel>
+            <Balance user={user} />
+          </TabPanel>
           <TabPanel>Transactions</TabPanel>
           <TabPanel>NFTs</TabPanel>
           <TabPanel>Send ETH</TabPanel>

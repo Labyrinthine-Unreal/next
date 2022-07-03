@@ -13,7 +13,7 @@ export default function Header({user, logout, isLoggingOut}){
                 <Text>
                     {user.getUsername()}
                 </Text>
-                    <Button ml="4" colorScheme="blackAlpha" onClick={logout} disable={isLoggingOut}>
+                    <Button ml="4" colorScheme="blackAlpha" onClick={logout} disabled={isLoggingOut}>
                         Logout
                     </Button>
             </Center>
