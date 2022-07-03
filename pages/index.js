@@ -1,8 +1,9 @@
 import Head from "next/head"
 import { useMoralis } from "react-moralis"
 import { Flex,Text,Button } from "@chakra-ui/react"
+import Header from "../components/Header"
 export default function Home() {
-  const {isAuthenticated, authenticate} =  useMoralis()
+  const {isAuthenticated, authenticate, user, logout} =  useMoralis()
   console.log(isAuthenticated)
   if(!isAuthenticated){
     return(
@@ -32,8 +33,17 @@ export default function Home() {
     )
   }
   return (
-    <div>
-    <h1> Hello,World</h1>
-    </div>
+    <>
+
+    <Head>
+      <tile>
+        Tauros Dashboard
+      </tile>
+    </Head>
+    <Flex>
+      <Header user={user} logout={logout}/>
+    </Flex>
+
+    </>
   )
 }
