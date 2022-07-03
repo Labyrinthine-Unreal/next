@@ -44,6 +44,9 @@ export default function Home() {
     </Head>
     <Flex direction="column" width="100vw" height="100vh">
       <Header user={user} logout={logout} isLoggingOut={isLoggingOut}/>
+      <Box flex="1" bg="purple.100" px="44" py="20"></Box>
+
+
     </Flex>
 
     </>
