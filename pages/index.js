@@ -58,7 +58,7 @@ export default function Home() {
 
         <TabPanels>
           <TabPanel>
-            <Profile />
+            <Profile user={user} />
           </TabPanel>
           <TabPanel>Balance</TabPanel>
           <TabPanel>Transactions</TabPanel>
