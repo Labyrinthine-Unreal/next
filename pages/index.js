@@ -4,6 +4,7 @@ import { Flex,Text,Button,Box,Tabs,TabPanel,TabList,Tab,TabPanels } from "@chakr
 import Header from "../components/Header"
 import Profile from "../components/Profile"
 import Balance from "../components/Balance"
+import Transactions from "../components/Transactions"
 export default function Home() {
   const {isAuthenticated, authenticate, user, logout, isLoggingOut} =  useMoralis()
   console.log(isAuthenticated)
@@ -64,7 +65,9 @@ export default function Home() {
           <TabPanel>
             <Balance user={user} />
           </TabPanel>
-          <TabPanel>Transactions</TabPanel>
+          <TabPanel>
+            <Transactions user={user} />
+          </TabPanel>
           <TabPanel>NFTs</TabPanel>
           <TabPanel>Send ETH</TabPanel>
         </TabPanels>

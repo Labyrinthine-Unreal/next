@@ -35,7 +35,7 @@ export default function Balance({user}) {
 
     return(
         <CustomContainer>
-            <Text>
+            <Text mb="6" fontSize="xl" fontWeight="bold">
                 My ERC20 Tokens
             </Text>
             {ethBalance && <Text>🏦&nbsp; {ethBalance}<b> ETH</b> </Text>}
