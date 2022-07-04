@@ -26,7 +26,7 @@ export default function Send() {
                         onSuccess: () => {
                             toast({
                                 title: 'Eth Successfully sent',
-                                description:"Fresh eth are showing up in the receivers wallet",
+                                description:"ETH in the receivers wallet",
                                 status: "Success",
                                 duration: 9000,
                                 isClosable: true
