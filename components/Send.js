@@ -58,7 +58,7 @@ export default function Send() {
                     <FormLabel mt="4" htmlFor="receiver">
                         Send To:
                     </FormLabel>
-                    <Input id="reveiver" type="text" placeholder="receiver address" value={receiver} onChange={e => setReceiver(e.target.value)}/>
+                    <Input id="receiver" type="text" placeholder="receiver address" value={receiver} onChange={e => setReceiver(e.target.value)}/>
                     </FormControl>
                     <Button mt="4" type ="submit" disabled={isFetching}>
                     📡&nbsp; Send ETH
