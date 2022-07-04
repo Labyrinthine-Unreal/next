@@ -1,8 +1,10 @@
 import Head from "next/head"
 import { useMoralis } from "react-moralis"
-import { Flex,Text,Button,Box,Tabs,TabPanel,TabList,Tab,TabPanels } from "@chakra-ui/react"
+import CustomContainer from "../components/CustomContainer"
+import { Flex,Text,Button,Box,AspectRatio,Tabs,TabPanel,TabList,Tab,TabPanels } from "@chakra-ui/react"
 import Header from "../components/Header"
 import Nft from "../components/Nft"
+import Land from "../components/Land"
 import Send from "../components/Send"
 import Profile from "../components/Profile"
 import Balance from "../components/Balance"
@@ -19,6 +21,8 @@ export default function Home() {
             Login | Dashboard
           </title>
         </Head>
+        
+
         <Flex 
         direction="column" 
         justifyContent="center" 
@@ -58,6 +62,7 @@ export default function Home() {
           <Tab fontWeight="bold">Transactions</Tab>
           <Tab fontWeight="bold">NFTs</Tab>
           <Tab fontWeight="bold">send ETH</Tab>
+          <Tab fontWeight="bold">Claim Estate</Tab>
         </TabList>
 
         <TabPanels>
@@ -75,6 +80,9 @@ export default function Home() {
           </TabPanel>
           <TabPanel>
             <Send />
+          </TabPanel>
+          <TabPanel>
+            <Land />
           </TabPanel>
         </TabPanels>
       </Tabs>
