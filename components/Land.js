@@ -1,26 +1,11 @@
-import {
-    Box,
-    Center,
-    useColorModeValue,
-    Heading,
-    Head,
-    Text,
-    Stack,
-    Button,
-    Image,
-  } from '@chakra-ui/react';
-  import CustomContainer from "./CustomContainer";
-  import { Divider,Flex,Link,Tabs,TabPanel,TabList,Tab,TabPanels,FormControl,FormLabel,Input } from "@chakra-ui/react"
-  import { useEffect, useState, ErrorMessage} from "react";
-  import { useMoralisWeb3Api,useERC20Balances,useApiContract } from "react-moralis";
-  import { useMoralis,useWeb3ExecuteFunction } from "react-moralis"
+import CustomContainer from "./CustomContainer";
+import { Divider, SimpleGrid, useToast, Flex, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper, NumberInputField, Text, NumberInput, Link, Button, Box, Tabs, TabPanel, TabList, Tab, TabPanels, FormControl, FormLabel, Input } from "@chakra-ui/react"
+import { useEffect, useState, } from "react";
+import { useWeb3Transfer, useMoralisWeb3Api, useERC20Balances, useNFTBalances, useApiContract } from "react-moralis";
+import Moralis from "moralis";
 
-  import Moralis from "moralis";
-//   import {executeFunction} from "moralis"
-  const IMAGE ='https://ipfs.io/ipfs/QmT3DCf2Cj1m65838DbWCFQR8f63cYvbZqrRgzUVmteB8z?filename=cloudy.jpg';
-  
-  export default function Land() {
-    const ABI =[
+export default function Land({ user }) {
+    const ABI = [
         {
             "inputs": [
                 {
@@ -875,96 +860,64 @@ import {
             "type": "function"
         }
     ];
-    const mintNFTs = () => {
-        // 0xdAC17F958D2ee523a2206206994597C13D831ec7 = contract address of USDT
-        Web3Api = useMoralisWeb3Api();
-      
-       
-        const [receiver,setReceiver ] = useState('')
-
-        const options = {
-          chain: "0x4",
-          address: "0x515f70BDad45169e92e1Cb16584BceD3C336c5ec",
-          function_name: "mintNFTs",
-          abi: ABI,
-        //   params: { _mintNFTs: 1 },
-        //   receiver: user.get('ethAddress')
-        };
-      
-        const { fetch, data, error, isLoading } = useMoralisWeb3ApiCall(
-          native.runContractFunction,
-          { ...options }
-        );
-      };
-      console.log(fetch);
+    // const { native } = useApiContract();
+    const [amount, setAmount] = useState(0)
+    const [receiver, setReceiver] = useState('')
+    const handleChange = (value) => setAmount(value)
+    const toast = useToast()
+    const { fetch, isFetching } = useApiContract({
+        chain: "rinkeby",
+        address: "0x515f70BDad45169e92e1Cb16584BceD3C336c5ec",
+        function_name: "mintNFTs",
+        abi: ABI,
+        params: { _mintNFTs: 1 },
+    })
 
     return (
-      <Center py={12}>
-        <Box
-          role={'group'}
-          p={6}
-          maxW={'330px'}
-          w={'full'}
-          bg={useColorModeValue('white', 'gray.800')}
-          boxShadow={'2xl'}
-          rounded={'lg'}
-          pos={'relative'}
-          zIndex={1}>
-          <Box
-            rounded={'lg'}
-            mt={-12}
-            pos={'relative'}
-            height={'230px'}
-            _after={{
-              transition: 'all .3s ease',
-              content: '""',
-              w: 'full',
-              h: 'full',
-              pos: 'absolute',
-              top: 5,
-              left: 0,
-              backgroundImage: `url(${IMAGE})`,
-              filter: 'blur(15px)',
-              zIndex: -1,
-            }}
-            _groupHover={{
-              _after: {
-                filter: 'blur(20px)',
-              },
-            }}>
-            <Image
-              rounded={'lg'}
-              height={230}
-              width={282}
-              objectFit={'cover'}
-              src={IMAGE}
-            />
-          </Box>
-          <Stack pt={10} align={'center'}>
-            <Text color={'gray.500'} fontSize={'sm'} textTransform={'uppercase'}>
-              Labyrinthine Unreal Estate
+        <CustomContainer>
+            <Text fontSize="xl" fontWeight="bold">
+                <form onSubmit={async e => {
+                    e.preventDefault()
+                    await Moralis.enableWeb3()
+                    // fetch({
+                    //     onSuccess: () => {
+                    //         toast({
+                    //             title: 'Eth Successfully sent',
+                    //             description:"NFT is now in your wallet",
+                    //             status: "Success",
+                    //             duration: 9000,
+                    //             isClosable: true
+                    //         })
+                    //         setReceiver(user.get('ethAddress'))
+                    //         },
+                    //     onError: (error) => {
+                    //         toast({
+                    //             title: 'Error',
+                    //             description:error,
+                    //             status: "error",
+                    //             duration: '9000',
+                    //             isClosable: true
+                    //         }) 
+                    //     }
+                    // })
+                }}>
+                    <FormControl mt="4">
+                        <FormLabel htmlFor="amount">
+                            Amount to Mint
+                        </FormLabel>
+                        <NumberInput step={1} onChange={handleChange}>
+                            <NumberInputField id="amount" value={amount} />
+                            <NumberInputStepper>
+                                <NumberIncrementStepper />
+                                <NumberDecrementStepper />
+                            </NumberInputStepper>
+                        </NumberInput>
+                    </FormControl>
+                    <Button mt="4" type="submit" disabled={isFetching}>
+                        📡&nbsp; Claim Estate
+                    </Button>
+                </form>
             </Text>
-            <Heading fontSize={'2xl'} fontFamily={'body'} fontWeight={500}>
-              Estate Airdrop
-            </Heading>
-            <Stack direction={'row'} align={'center'}>
-              <Text fontWeight={800} fontSize={'xl'}>
-                0 ETH + gas
-              </Text>
-              <Text textDecoration={'line-through'} color={'gray.600'}>
-                .025 after pre sale
-              </Text>
-            </Stack>
-          </Stack>
-          {/* {error && <ErrorMessage error={error} />} */}
-          {/* enabled={isInitialized} */}
-          <Button colorScheme="purple" onClick={() => {
-            fetch({ params: mintNFTs });
-          }}>
-                  Claim Estate
-                  </Button>
-        </Box>
-      </Center>
-    );
+        </CustomContainer>
+    )
 }
-  
