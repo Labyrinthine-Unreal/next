@@ -11,16 +11,15 @@ import {
   } from '@chakra-ui/react';
   import CustomContainer from "./CustomContainer";
   import { Divider,Flex,Link,Tabs,TabPanel,TabList,Tab,TabPanels,FormControl,FormLabel,Input } from "@chakra-ui/react"
-  import { useEffect, useState, } from "react";
-  import { useMoralisWeb3Api,useERC20Balances } from "react-moralis";
-  import { useMoralis } from "react-moralis"
+  import { useEffect, useState, ErrorMessage} from "react";
+  import { useMoralisWeb3Api,useERC20Balances,useApiContract } from "react-moralis";
+  import { useMoralis,useWeb3ExecuteFunction } from "react-moralis"
 
   import Moralis from "moralis";
-
+//   import {executeFunction} from "moralis"
   const IMAGE ='https://ipfs.io/ipfs/QmT3DCf2Cj1m65838DbWCFQR8f63cYvbZqrRgzUVmteB8z?filename=cloudy.jpg';
   
   export default function Land() {
-    const {isAuthenticated, authenticate, user, logout, isLoggingOut} =  useMoralis()
     const ABI =[
         {
             "inputs": [
@@ -876,24 +875,29 @@ import {
             "type": "function"
         }
     ];
-    const mintNFTs = {
-        contractAddress: "0xDE370E7B158FfF9E4F9f5cF8F2b88D2adAb556b4",
-        functionName: "mintNFTs",
-        abi: ABI,
-        params: {
-          _mintNFTs: 1,
-        },
-      };
-    // const transaction = await Moralis.executeFunction(mintNFTs);
-    // console.log(transaction.hash);
+    const mintNFTs = () => {
+        // 0xdAC17F958D2ee523a2206206994597C13D831ec7 = contract address of USDT
+        Web3Api = useMoralisWeb3Api();
+      
+       
+        const [receiver,setReceiver ] = useState('')
 
-    if(isAuthenticated){
-                // <Button colorScheme="purple"
-                // onClick={()=>Moralis.executeFunction(mintNFTs)}>
-                //   Metamask Login
-                //   </Button>
-        
-    //   }
+        const options = {
+          chain: "0x4",
+          address: "0x515f70BDad45169e92e1Cb16584BceD3C336c5ec",
+          function_name: "mintNFTs",
+          abi: ABI,
+        //   params: { _mintNFTs: 1 },
+        //   receiver: user.get('ethAddress')
+        };
+      
+        const { fetch, data, error, isLoading } = useMoralisWeb3ApiCall(
+          native.runContractFunction,
+          { ...options }
+        );
+      };
+      console.log(fetch);
+
     return (
       <Center py={12}>
         <Box
@@ -952,12 +956,15 @@ import {
               </Text>
             </Stack>
           </Stack>
-          <Button colorScheme="purple"
-                onClick={()=>Moralis.executeFunction(mintNFTs)}>
+          {/* {error && <ErrorMessage error={error} />} */}
+          {/* enabled={isInitialized} */}
+          <Button colorScheme="purple" onClick={() => {
+            fetch({ params: mintNFTs });
+          }}>
                   Claim Estate
                   </Button>
         </Box>
       </Center>
     );
-        }
-  }
+}
+  
